@@ -8,7 +8,8 @@ library(tidyverse)
 upsides_ram_data <- read_csv("../data/upsides_ram_data.csv")
 
 # User interface. Can also place in separate ui.R -----------
-ui <- fluidPage(
+ui <- function(request){
+  fluidPage(
   
   # Application title -----------
   titlePanel("Upsides RAM Stocks Explorer"),
@@ -27,7 +28,8 @@ ui <- fluidPage(
       # Input for policy filter  -----------
       checkboxGroupInput(inputId = "policy",
                          label = "Select policies for figures",
-                         choices = unique(upsides_ram_data$Policy))
+                         choices = unique(upsides_ram_data$Policy)),
+      bookmarkButton()
     ),
     
     # Configure main panel  -----------
@@ -44,9 +46,11 @@ ui <- fluidPage(
     )
   )
 )
+}
 
 # Server. can also place in separate server.R -----------
 server <- function(input, output, session) {
+  enableBookmarking("url")
   
   # Reactive filtered dataset  -----------
   filtered_data <- reactive({
@@ -88,4 +92,4 @@ server <- function(input, output, session) {
   })
 }
 
-shinyApp(ui, server)
+shinyApp(ui, server, enableBookmarking = "url")

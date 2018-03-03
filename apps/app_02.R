@@ -1,54 +1,59 @@
-# Turning the basic shiny app into shinydashboard
+# Basic Shiny app to explore RAM stock projectionss in upsides database
 
 # Code common across app. Can also place in separate global.R -----------
 # Load packages
 library(shiny)
 library(tidyverse)
-library(shinydashboard)
 # Load data. Upsides data from RAM stocks for BAU, FMSY, and Opt policies
 upsides_ram_data <- read_csv("../data/upsides_ram_data.csv")
 
 # User interface. Can also place in separate ui.R -----------
-# To switch from regular shiny layout to shinydashboard, just change fluidPage to dashboardPage
-ui <- dashboardPage(
+# To add bookmarking, need to make ui into function
+ui <- function(request){
+  fluidPage(
   
   # Application title -----------
-  # To switch from regular shiny layout to shinydashboard, just change titlePanel to dashboardHeader, and specify title
-  dashboardHeader(title = "Upsides RAM Stocks Explorer"),
+  titlePanel("Upsides RAM Stocks Explorer"),
   
   # Initiate Sidebar layout  -----------
-  # To switch from regular shiny layout to shinydashboard, just change sidebarLayout to dashboardSidebar
-  dashboardSidebar(
+  sidebarLayout(
     
-    # Input for country filter  -----------
-    selectInput(inputId = "country",
-                label = "Select country for figures",
-                choices = unique(upsides_ram_data$Country)),
+    # Configure sidebar  -----------
+    sidebarPanel(
+      
+      # Input for country filter  -----------
+      selectInput(inputId = "country",
+                  label = "Select country for figures",
+                  choices = unique(upsides_ram_data$Country)),
+      
+      # Input for policy filter  -----------
+      checkboxGroupInput(inputId = "policy",
+                         label = "Select policies for figures",
+                         choices = unique(upsides_ram_data$Policy)),
+      
+      # Bookmark button  -----------
+      bookmarkButton()
+    ),
     
-    # Input for policy filter  -----------
-    checkboxGroupInput(inputId = "policy",
-                       label = "Select policies for figures",
-                       choices = unique(upsides_ram_data$Policy))
-  ),
-  
-  # Configure main panel  -----------
-  # To switch from regular shiny layout to shinydashboard, just change mainPanel to dashboardBody
-  dashboardBody(
-    
-    # Display biomass figure  -----------
-    plotOutput("biomass_plot"),
-    
-    # Display catch figure  -----------
-    plotOutput("catch_plot"),
-    
-    # Display profits figure  -----------
-    plotOutput("profits_plot")
-    
+    # Configure main panel  -----------
+    mainPanel(
+      
+      # Display biomass figure  -----------
+      plotOutput("biomass_plot"),
+      
+      # Display catch figure  -----------
+      plotOutput("catch_plot"),
+      
+      # Display profits figure  -----------
+      plotOutput("profits_plot")
+    )
   )
 )
+}
 
 # Server. can also place in separate server.R -----------
 server <- function(input, output, session) {
+  enableBookmarking("url")
   
   # Reactive filtered dataset  -----------
   filtered_data <- reactive({
@@ -90,4 +95,5 @@ server <- function(input, output, session) {
   })
 }
 
-shinyApp(ui, server)
+# To add bookmarking, need to add enableBookmarking to shinyApp call
+shinyApp(ui, server, enableBookmarking = "url")
