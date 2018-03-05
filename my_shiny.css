@@ -1,0 +1,15 @@
+slides > slide.title-slide {
+  background-image:url("images/shiny.png ");
+  background-position: center center;
+  top: 40%;
+  left: 50%;
+  background-repeat: no-repeat;
+}
+
+slides > slide.title-slide hgroup h1 {
+  font-size: 44pt;
+  position: fixed;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

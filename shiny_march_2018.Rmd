@@ -1,0 +1,63 @@
+---
+title: "rstudio::conf2018(shiny)"
+css: my_shiny.css
+output: 
+  ioslides_presentation: 
+    fig_width: 7
+    fig_height: 6
+    transition: faster
+    widescreen: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+```
+
+## Materials
+- [2018 workshop materials](https://github.com/jcheng5/shiny-training-rstudioconf-2018)
+- Conference videos:
+- [Scaling Shiny apps with async programming](https://www.rstudio.com/resources/videos/scaling-shiny-apps-with-async-programming/)
+- [Developing robust shiny apps with regression testing](https://www.rstudio.com/resources/videos/developing-robust-shiny-apps-with-regression-testing/)
+- [Make Shiny fast by doing as little work as possible](https://www.rstudio.com/resources/videos/make-shiny-fast-by-doing-as-little-work-as-possible/)
+- [Scaling Shiny](https://www.rstudio.com/resources/videos/scaling-shiny/)
+- [Rapid prototyping data products using Shiny](https://www.rstudio.com/resources/videos/rapid-prototyping-data-products-using-shiny/)
+ - [Developing and deploying large scale Shiny applications](https://www.rstudio.com/resources/videos/developing-and-deploying-large-scale-shiny-applications/)
+- [2016 developer conference](https://www.rstudio.com/resources/webinars/shiny-developer-conference/)
+
+## Improving your UI
+- [shinydashboard](http://rstudio.github.io/shinydashboard/) – Snazzy dashboards
+- [shinythemes](https://github.com/rstudio/shinythemes) – modify color of default shiny objects
+- [shinyBS](https://github.com/ebailey78/shinyBS) – adds little things shiny doesn’t come prepackaged with, i.e., tooltips
+- [shinyjs](https://github.com/daattali/shinyjs) - adds javascript features
+- [shinytoastr](https://github.com/MangoTheCat/shinytoastr) – popup notification messages
+- [miniUI](https://github.com/rstudio/miniUI) – build UIs specifically for mobile devices
+- [wellPanel](https://shiny.rstudio.com/articles/layout-guide.html) - Fixed, hovering panels in UI
+- [htmltools](https://github.com/rstudio/htmltools) - use R programming commands to generate HTML
+
+## Improving your UI (continued)
+- [req](https://shiny.rstudio.com/articles/req.html) - require certain reactive sources, or stop current chunk - minimize errors
+- [debounce and throttle](https://shiny.rstudio.com/reference/shiny/1.0.4/debounce.html) - Great for improving user experience
+- Update family of functions - Dynamically update any element of the UI from server (e.g., [updateNumericinput](https://shiny.rstudio.com/reference/shiny/latest/updateNumericInput.html))
+- [Drill down reporting](https://github.com/bborgesr/rstudio-conf-2018)
+
+## Debugging
+- Nice overview: https://shiny.rstudio.com/articles/debugging.html
+- Don’t do processing/computation inside render functions - put all this into a separate reactive expression
+- print and renderPrint
+- browser(), conditional statement + browser()
+- break points
+- [logjs](https://github.com/daattali/shinyjs) from shinyjs package
+- [showcase display mode](https://shiny.rstudio.com/articles/display-modes.html)
+- [shiny.reactlog](https://shiny.rstudio.com/reference/shiny/latest/showReactLog.html)
+
+## Performance improvements
+- Pre-process as much as possible. If you must, process in global instead of server.
+- [Profiling and performance](https://www.rstudio.com/resources/videos/profiling-and-performance/) - Nice overview
+- [Profvis](https://rstudio.github.io/profvis/examples.html#example-3---profiling-a-shiny-application) - Interactive visualizations for profiling code
+- [shinytest](https://github.com/rstudio/shinytest) - Test shiny app functionality
+- [async programming using promises](https://rstudio.github.io/promises/) - Asynchronous programming - start a long operation, but don't need to wait around for results
+
+## Other nifty new things
+- [modules](https://shiny.rstudio.com/articles/modules.html) - Reuse chunks of commonly used UI and server code
+- [bookmarking states](https://shiny.rstudio.com/articles/bookmarking-state.html) - bookmark selected inputs and tabs
