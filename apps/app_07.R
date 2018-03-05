@@ -1,4 +1,4 @@
-# Take advantage of more shinydashboard features by adding boxes and infoBoxes
+# Turn ggplots into plotly plots
 
 # Code common across app. Can also place in separate global.R -----------
 # Load packages

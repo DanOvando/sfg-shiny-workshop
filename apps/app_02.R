@@ -1,9 +1,11 @@
-# Basic Shiny app to explore RAM stock projectionss in upsides database
+# Basic Shiny app to explore RAM stock projections in upsides database
+# Now adding new features - theme selector and bookmaring
 
 # Code common across app. Can also place in separate global.R -----------
 # Load packages
 library(shiny)
 library(tidyverse)
+library(shinythemes)
 # Load data. Upsides data from RAM stocks for BAU, FMSY, and Opt policies
 upsides_ram_data <- read_csv("../data/upsides_ram_data.csv")
 
@@ -12,6 +14,12 @@ upsides_ram_data <- read_csv("../data/upsides_ram_data.csv")
 ui <- function(request){
   fluidPage(
   
+  # add live theme selector title -----------
+  shinythemes::themeSelector(),  
+  
+  # Set theme to default for now -----------
+  theme = shinythemes::shinytheme("united"),
+    
   # Application title -----------
   titlePanel("Upsides RAM Stocks Explorer"),
   

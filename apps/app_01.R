@@ -1,4 +1,5 @@
-# Basic Shiny app to explore RAM stock projectionss in upsides database
+# Basic Shiny app to explore RAM stock projections in upsides database
+# Add catch and profit projections
 
 # Code common across app. Can also place in separate global.R -----------
 # Load packages

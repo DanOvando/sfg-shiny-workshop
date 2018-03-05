@@ -1,4 +1,4 @@
-# Take advantage of more shinydashboard features by adding boxes and infoBoxes
+# Take advantage of more shinydashboard features by adding boxes
 
 # Code common across app. Can also place in separate global.R -----------
 # Load packages
