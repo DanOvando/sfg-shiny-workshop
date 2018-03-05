@@ -65,8 +65,8 @@ server <- function(input, output, session) {
   # Reactive filtered dataset  -----------
   filtered_data <- reactive({
     
-    # Require policy input - don't go further until it exists
-    req(input$policy)
+    # Require policy and country input - don't go further until it exists
+    req(input$policy, input$country)
     
     upsides_ram_data %>%
       filter(Country == input$country &
