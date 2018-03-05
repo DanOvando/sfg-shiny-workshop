@@ -8,9 +8,7 @@ library(tidyverse)
 upsides_ram_data <- read_csv("../data/upsides_ram_data.csv")
 
 # User interface. Can also place in separate ui.R -----------
-# To add bookmarking, need to make ui into function
-ui <- function(request){
-  fluidPage(
+ui <- fluidPage(
   
   # Application title -----------
   titlePanel("Upsides RAM Stocks Explorer"),
@@ -29,27 +27,18 @@ ui <- function(request){
       # Input for policy filter  -----------
       checkboxGroupInput(inputId = "policy",
                          label = "Select policies for figures",
-                         choices = unique(upsides_ram_data$Policy)),
-      
-      # Bookmark button  -----------
-      bookmarkButton()
+                         choices = unique(upsides_ram_data$Policy))
     ),
     
     # Configure main panel  -----------
     mainPanel(
       
       # Display biomass figure  -----------
-      plotOutput("biomass_plot"),
+      plotOutput("biomass_plot")
       
-      # Display catch figure  -----------
-      plotOutput("catch_plot"),
-      
-      # Display profits figure  -----------
-      plotOutput("profits_plot")
     )
   )
 )
-}
 
 # Server. can also place in separate server.R -----------
 server <- function(input, output, session) {
@@ -75,24 +64,6 @@ server <- function(input, output, session) {
     
   })
   
-  # Render catch plot using filtered data set  -----------
-  output$catch_plot <- renderPlot({
-    
-    filtered_data() %>%
-      ggplot(aes(x = Year, y = Catch, color = Policy)) +
-      geom_line()
-    
-  })
-  
-  # Render profits plot using filtered data set  -----------
-  output$profits_plot <- renderPlot({
-    
-    filtered_data() %>%
-      ggplot(aes(x = Year, y = Profits, color = Policy)) +
-      geom_line()
-    
-  })
 }
 
-# To add bookmarking, need to add enableBookmarking to shinyApp call
-shinyApp(ui, server, enableBookmarking = "url")
+shinyApp(ui, server)

@@ -5,12 +5,11 @@
 library(shiny)
 library(tidyverse)
 library(shinydashboard)
-library(plotly)
 # Load data. Upsides data from RAM stocks for BAU, FMSY, and Opt policies
 upsides_ram_data <- read_csv("../data/upsides_ram_data.csv")
 
 # Source shiny modules
-source("modules/projection_plotly_mod.R")
+source("modules/projection_plot_mod.R")
 source("modules/upsides_box_mod.R")
 
 # User interface. Can also place in separate ui.R -----------
@@ -42,7 +41,7 @@ ui <- function(request){
       
       # Initialize fluid row  -----------
       fluidRow(
-        
+        # Now we can just call module UIs
         # Display biomass figure  -----------
         projection_plot_mod_UI("biomass_plot"),
         
@@ -54,7 +53,7 @@ ui <- function(request){
         
       ),
       fluidRow(
-        
+        # Now we can just call module UIs
         # Display change in biomass infoBox  -----------
         upsides_box_mod_UI("biomass_box"),
         
@@ -67,7 +66,6 @@ ui <- function(request){
     )
   )
 }
-
 # Server. can also place in separate server.R -----------
 server <- function(input, output, session) {
   

@@ -5,8 +5,13 @@
 library(shiny)
 library(tidyverse)
 library(shinydashboard)
+library(plotly)
 # Load data. Upsides data from RAM stocks for BAU, FMSY, and Opt policies
 upsides_ram_data <- read_csv("../data/upsides_ram_data.csv")
+
+# Source shiny modules
+source("modules/projection_plotly_mod.R")
+source("modules/upsides_box_mod.R")
 
 # User interface. Can also place in separate ui.R -----------
 ui <- function(request){
@@ -39,34 +44,30 @@ ui <- function(request){
       fluidRow(
         
         # Display biomass figure  -----------
-        # Put inside a box  -----------
-        box(title = "Biomass Projections", 
-            status = "primary",
-            solidHeader = TRUE,
-            width = 4,
-            plotOutput("biomass_plot")),
-        
+        projection_plot_mod_UI("biomass_plot"),
         
         # Display catch figure  -----------
-        # Put inside a box  -----------
-        box(title = "Catch Projections", 
-            status = "primary",
-            solidHeader = TRUE,
-            width = 4,
-            plotOutput("catch_plot")),
+        projection_plot_mod_UI("catch_plot"),
         
-        # Display profits figure  -----------
-        # Put inside a box  -----------
-        box(title = "Profits Projections", 
-            status = "primary",
-            solidHeader = TRUE,
-            width = 4,
-            plotOutput("profits_plot"))
+        # Display Profits figure  -----------
+        projection_plot_mod_UI("profits_plot")
         
+      ),
+      fluidRow(
+        
+        # Display change in biomass infoBox  -----------
+        upsides_box_mod_UI("biomass_box"),
+        
+        # Display change in catch infoBox  -----------
+        upsides_box_mod_UI("catch_box"),
+        
+        # Display change in profits infoBox  -----------
+        upsides_box_mod_UI("profits_box")
       )
     )
   )
 }
+
 # Server. can also place in separate server.R -----------
 server <- function(input, output, session) {
   
@@ -98,32 +99,19 @@ server <- function(input, output, session) {
     
   })
   
-  # Render biomass plot using filtered data set  -----------
-  output$biomass_plot <- renderPlot({
-    
-    filtered_data() %>%
-      ggplot(aes(x = Year, y = Biomass, color = Policy)) +
-      geom_line()
-    
-  })
+  # Call all modules  -----------
   
-  # Render catch plot using filtered data set  -----------
-  output$catch_plot <- renderPlot({
-    
-    filtered_data() %>%
-      ggplot(aes(x = Year, y = Catch, color = Policy)) +
-      geom_line()
-    
-  })
+  callModule(projection_plot_mod, "biomass_plot", data = filtered_data, indicator = "Biomass")
   
-  # Render profits plot using filtered data set  -----------
-  output$profits_plot <- renderPlot({
-    
-    filtered_data() %>%
-      ggplot(aes(x = Year, y = Profits, color = Policy)) +
-      geom_line()
-    
-  })
+  callModule(projection_plot_mod, "catch_plot", data = filtered_data, indicator = "Catch")
+  
+  callModule(projection_plot_mod, "profits_plot", data = filtered_data, indicator = "Profits")
+  
+  callModule(upsides_box_mod, "biomass_box", data_box = filtered_upsides_data, indicator_box = "Biomass")
+  
+  callModule(upsides_box_mod, "catch_box", data_box = filtered_upsides_data, indicator_box = "Catch")
+  
+  callModule(upsides_box_mod, "profits_box", data_box = filtered_upsides_data, indicator_box = "Profits")
   
 }
 
