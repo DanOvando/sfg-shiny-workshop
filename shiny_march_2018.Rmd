@@ -14,16 +14,17 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```
 
-## Materials
-- [2018 workshop materials](https://github.com/jcheng5/shiny-training-rstudioconf-2018)
-- Conference videos:
-- [Scaling Shiny apps with async programming](https://www.rstudio.com/resources/videos/scaling-shiny-apps-with-async-programming/)
-- [Developing robust shiny apps with regression testing](https://www.rstudio.com/resources/videos/developing-robust-shiny-apps-with-regression-testing/)
-- [Make Shiny fast by doing as little work as possible](https://www.rstudio.com/resources/videos/make-shiny-fast-by-doing-as-little-work-as-possible/)
-- [Scaling Shiny](https://www.rstudio.com/resources/videos/scaling-shiny/)
-- [Rapid prototyping data products using Shiny](https://www.rstudio.com/resources/videos/rapid-prototyping-data-products-using-shiny/)
- - [Developing and deploying large scale Shiny applications](https://www.rstudio.com/resources/videos/developing-and-deploying-large-scale-shiny-applications/)
-- [2016 developer conference](https://www.rstudio.com/resources/webinars/shiny-developer-conference/)
+## Resources
+* [2018 workshop materials](https://github.com/jcheng5/shiny-training-rstudioconf-2018)
+* [2016 developer conference](https://www.rstudio.com/resources/webinars/shiny-developer-conference/)
+* Upcoming EcoDataSci Workshop - Intro to Shiny with Ben Best - April 4, 2018
+* Conference videos:
+  + [Scaling Shiny apps with async programming](https://www.rstudio.com/resources/videos/scaling-shiny-apps-with-async-programming/)
+  - [Developing robust shiny apps with regression testing](https://www.rstudio.com/resources/videos/developing-robust-shiny-apps-with-regression-testing/)
+  + [Make Shiny fast by doing as little work as possible](https://www.rstudio.com/resources/videos/make-shiny-fast-by-doing-as-little-work-as-possible/)
+  + [Scaling Shiny](https://www.rstudio.com/resources/videos/scaling-shiny/)
+  + [Rapid prototyping data products using Shiny](https://www.rstudio.com/resources/videos/rapid-prototyping-data-products-using-shiny/)
+ + [Developing and deploying large scale Shiny applications](https://www.rstudio.com/resources/videos/developing-and-deploying-large-scale-shiny-applications/)
 
 ## Improving your UI
 - [shinydashboard](http://rstudio.github.io/shinydashboard/) – Snazzy dashboards
