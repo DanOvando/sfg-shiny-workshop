@@ -26,7 +26,8 @@ ui <- function(request){
       # Input for policy filter  -----------
       checkboxGroupInput(inputId = "policy",
                          label = "Select policies for figures",
-                         choices = unique(upsides_ram_data$Policy)),
+                         choices = unique(upsides_ram_data$Policy),
+                         selected = "Business As Usual"),
       
       # Bookmark button  -----------
       bookmarkButton()
@@ -80,23 +81,10 @@ server <- function(input, output, session) {
       filter(Country == input$country &
                Policy %in% input$policy)
     
-  })
-  
-  # Reactive upsides dataset  -----------
-  filtered_upsides_data <- reactive({
-    
-    # Determine upside from first to last year, for each indicator
-    filtered_data() %>% 
-      filter(Year %in% c(min(filtered_data()$Year),
-                         max(filtered_data()$Year))) %>%
-      mutate(Year = ifelse(Year == min(filtered_data()$Year), 
-                           "start", 
-                           "end")) %>%
-      gather(indicator, value, Biomass:Profits) %>%
-      spread(Year,value) %>%
-      mutate(change = end - start)
-    
-  })
+  }) %>% 
+    # Delay filtering of data until 1 second has passed since last input change
+    # Will delay all downstream rendering as well
+    debounce(1000)
   
   # Render biomass plot using filtered data set  -----------
   output$biomass_plot <- renderPlot({

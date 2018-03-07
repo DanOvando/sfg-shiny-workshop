@@ -28,7 +28,8 @@ ui <- fluidPage(
       # Input for policy filter  -----------
       checkboxGroupInput(inputId = "policy",
                          label = "Select policies for figures",
-                         choices = unique(upsides_ram_data$Policy))
+                         choices = unique(upsides_ram_data$Policy),
+                         selected = "Business As Usual")
     ),
     
     # Configure main panel  -----------
