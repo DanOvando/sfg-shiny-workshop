@@ -80,10 +80,7 @@ server <- function(input, output, session) {
       filter(Country == input$country &
                Policy %in% input$policy)
     
-  }) %>% 
-    # Delay filtering of data until 1 second has passed since last input change
-    # Will delay all downstream rendering as well
-    debounce(1000)
+  })
   
   # Reactive upsides dataset  -----------
   filtered_upsides_data <- reactive({

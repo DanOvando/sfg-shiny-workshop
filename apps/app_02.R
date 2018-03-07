@@ -1,5 +1,5 @@
 # Basic Shiny app to explore RAM stock projections in upsides database
-# Now adding new features - theme selector, bookmaring, and debounce
+# Now adding new features - theme selector and bookmaring
 
 # Code common across app. Can also place in separate global.R -----------
 # Load packages
@@ -73,10 +73,7 @@ server <- function(input, output, session) {
       filter(Country == input$country &
                Policy %in% input$policy)
     
-  }) %>% 
-    # Delay filtering of data until 1 second has passed since last input change
-    # Will delay all downstream rendering as well
-    debounce(1000)
+  })
   
   # Render biomass plot using filtered data set  -----------
   output$biomass_plot <- renderPlot({
