@@ -1,5 +1,17 @@
 # Take advantage of modules to streamline code
 
+# # Handy snippet for quick-starting a shiny module:
+# name_UI <- function(id) {
+#   ns <- NS(id)
+#   tagList(
+#     
+#   )
+# }
+# 
+# name <- function(input, output, session) {
+#   
+# }
+
 # Code common across app. Can also place in separate global.R -----------
 # Load packages
 library(shiny)

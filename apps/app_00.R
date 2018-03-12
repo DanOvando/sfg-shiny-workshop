@@ -1,5 +1,18 @@
 # Basic Shiny app to explore RAM stock projections in upsides database
 
+# # Handy snippet for quick-starting a shiny app:
+# library(shiny)
+# 
+# ui <- fluidPage(
+#   
+# )
+# 
+# server <- function(input, output, session) {
+#   
+# }
+# 
+# shinyApp(ui, server)
+
 # Code common across app. Can also place in separate global.R -----------
 # Load packages
 library(shiny)
