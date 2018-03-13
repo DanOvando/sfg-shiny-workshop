@@ -1,4 +1,4 @@
-# Basic Shiny app to explore RAM stock projections in upsides database
+# Basic Shiny app to explore fishery projections
 
 # # Handy snippet for quick-starting a shiny app:
 # library(shiny)
@@ -17,14 +17,14 @@
 # Load packages
 library(shiny)
 library(tidyverse)
-# Load data. Upsides data from RAM stocks for BAU, FMSY, and Opt policies
-upsides_ram_data <- read_csv("../data/upsides_ram_data.csv")
+# Load data. Anonymized upsides data for 10 countries for BAU, FMSY, and Opt policies
+upsides_data <- read_csv("../data/upsides_data.csv")
 
 # User interface. Can also place in separate ui.R -----------
 ui <- fluidPage(
   
   # Application title -----------
-  titlePanel("Upsides RAM Stocks Explorer"),
+  titlePanel("Fishery Projections Explorer"),
   
   # Initiate Sidebar layout  -----------
   sidebarLayout(
@@ -35,12 +35,12 @@ ui <- fluidPage(
       # Input for country filter  -----------
       selectInput(inputId = "country",
                   label = "Select country for figures",
-                  choices = unique(upsides_ram_data$Country)),
+                  choices = unique(upsides_data$Country) %>% sort()),
       
       # Input for policy filter  -----------
       checkboxGroupInput(inputId = "policy",
                          label = "Select policies for figures",
-                         choices = unique(upsides_ram_data$Policy),
+                         choices = unique(upsides_data$Policy),
                          selected = "Business As Usual")
     ),
     
@@ -63,7 +63,7 @@ server <- function(input, output, session) {
     # Require policy and country input - don't go further until it exists
     req(input$policy, input$country)
     
-    upsides_ram_data %>%
+    upsides_data %>%
       filter(Country == input$country &
                Policy %in% input$policy)
     

@@ -17,8 +17,8 @@
 library(shiny)
 library(tidyverse)
 library(shinydashboard)
-# Load data. Upsides data from RAM stocks for BAU, FMSY, and Opt policies
-upsides_ram_data <- read_csv("../data/upsides_ram_data.csv")
+# Load data. Anonymized upsides data for 10 countries for BAU, FMSY, and Opt policies
+upsides_data <- read_csv("../data/upsides_data.csv")
 
 # Source shiny modules
 source("modules/projection_plot_mod.R")
@@ -29,7 +29,7 @@ ui <- function(request){
   dashboardPage(
     
     # Application title -----------
-    dashboardHeader(title = "Upsides RAM Stocks Explorer"),
+    dashboardHeader(title = "Fishery Projections Explorer"),
     
     # Initiate Sidebar layout  -----------
     dashboardSidebar(
@@ -37,12 +37,12 @@ ui <- function(request){
       # Input for country filter  -----------
       selectInput(inputId = "country",
                   label = "Select country for figures",
-                  choices = unique(upsides_ram_data$Country)),
+                  choices = unique(upsides_data$Country) %>% sort()),
       
       # Input for policy filter  -----------
       checkboxGroupInput(inputId = "policy",
                          label = "Select policies for figures",
-                         choices = unique(upsides_ram_data$Policy),
+                         choices = unique(upsides_data$Policy),
                          selected = "Business As Usual"),
       
       # Bookmark button  -----------
@@ -88,7 +88,7 @@ server <- function(input, output, session) {
     # Require policy and country input - don't go further until it exists
     req(input$policy, input$country)
     
-    upsides_ram_data %>%
+    upsides_data %>%
       filter(Country == input$country &
                Policy %in% input$policy)
     
