@@ -81,18 +81,15 @@ https://github.com/jcheng5/shiny-training-rstudioconf-2018/blob/master/slides/03
 - [shinytoastr](https://github.com/MangoTheCat/shinytoastr) – popup notification messages
 - [miniUI](https://github.com/rstudio/miniUI) – build UIs specifically for mobile devices
 - [wellPanel](https://shiny.rstudio.com/articles/layout-guide.html) - Fixed, hovering panels in UI
-- [htmltools](https://github.com/rstudio/htmltools) - use R programming commands to generate HTML
-
-## Improving your UI
-- [req](https://shiny.rstudio.com/articles/req.html) - require certain reactive sources, or stop current chunk - minimize errors
-- [debounce and throttle](https://shiny.rstudio.com/reference/shiny/1.0.4/debounce.html) - Great for improving user experience
-- Update family of functions - Dynamically update any element of the UI from server (e.g., [updateNumericinput](https://shiny.rstudio.com/reference/shiny/latest/updateNumericInput.html))
 - [Drill down reporting](https://github.com/bborgesr/rstudio-conf-2018)
+- [bookmarking states](https://shiny.rstudio.com/articles/bookmarking-state.html) - bookmark selected inputs and tabs
+- [htmltools](https://github.com/rstudio/htmltools) - use R programming commands to generate HTML
 
 ## Debugging
 - Nice overview: https://shiny.rstudio.com/articles/debugging.html
 - Break apart complicated processing logistic into understandable and testable chunks
 - Don’t do processing/computation inside render functions - put all this into a separate reactive expression
+- [modules](https://shiny.rstudio.com/articles/modules.html) - Reuse chunks of commonly used UI and server code
 - print and renderPrint
 - browser(), conditional statement + browser()
 - break points
@@ -104,7 +101,3 @@ https://github.com/jcheng5/shiny-training-rstudioconf-2018/blob/master/slides/03
 - [Profvis](https://rstudio.github.io/profvis/examples.html#example-3---profiling-a-shiny-application) - Interactive visualizations for profiling code
 - [shinytest](https://github.com/rstudio/shinytest) - Test shiny app functionality
 - [async programming using promises](https://rstudio.github.io/promises/) - Asynchronous programming - start a long operation, but don't need to wait around for results
-
-## Other nifty new things
-- [modules](https://shiny.rstudio.com/articles/modules.html) - Reuse chunks of commonly used UI and server code
-- [bookmarking states](https://shiny.rstudio.com/articles/bookmarking-state.html) - bookmark selected inputs and tabs
