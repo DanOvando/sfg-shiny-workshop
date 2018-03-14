@@ -74,8 +74,9 @@ https://github.com/jcheng5/shiny-training-rstudioconf-2018/blob/master/slides/03
 https://github.com/jcheng5/shiny-training-rstudioconf-2018/blob/master/slides/03-understanding-ui.pdf
 
 ## Improving your UI
-- [shinydashboard](http://rstudio.github.io/shinydashboard/) – Snazzy dashboards
 - [shinythemes](https://github.com/rstudio/shinythemes) – modify color of default shiny objects
+- [shinydashboard](http://rstudio.github.io/shinydashboard/) – Snazzy dashboards
+- [shinymaterial](https://ericrayanderson.github.io/shinymaterial/) - Utilize Google's design standards (Materialize CSS)
 - [shinyBS](https://github.com/ebailey78/shinyBS) – adds little things shiny doesn’t come prepackaged with, i.e., tooltips
 - [shinyjs](https://github.com/daattali/shinyjs) - adds javascript features
 - [shinytoastr](https://github.com/MangoTheCat/shinytoastr) – popup notification messages
