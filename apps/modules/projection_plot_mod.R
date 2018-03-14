@@ -1,3 +1,5 @@
+# Projection plot module using classic ggplot and shinydasboards layout
+
 projection_plot_mod_UI <- function(id) {
   
   ns <- NS(id)

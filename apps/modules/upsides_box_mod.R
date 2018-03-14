@@ -1,3 +1,5 @@
+# Upsides box module using shinydashboards layout
+
 upsides_box_mod_UI <- function(id) {
   
   ns <- NS(id)
