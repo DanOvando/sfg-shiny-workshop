@@ -10,3 +10,4 @@ If you would like to follow along and try the apps on your own computer, please 
 - shinydashboard
 - plotly
 - profvis
+- shinymaterial
