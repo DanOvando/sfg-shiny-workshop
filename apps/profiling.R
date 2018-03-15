@@ -1,4 +1,5 @@
 library(profvis)
+library(shiny)
 profvis({
   data(diamonds, package = "ggplot2")
   
@@ -9,5 +10,5 @@ profvis({
 
 
 profvis({
-  runApp("../apps/app_07.R", display.mode = "normal")
+  runApp("apps/app_07.R", display.mode = "normal")
 })
