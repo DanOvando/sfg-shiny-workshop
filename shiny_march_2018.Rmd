@@ -33,7 +33,15 @@ https://github.com/jcheng5/shiny-training-rstudioconf-2018/blob/master/slides/01
 <img src="copied_slides/intro2.png" width="800">
 https://github.com/jcheng5/shiny-training-rstudioconf-2018/blob/master/slides/01-fast-intro.pdf
 
-## What is Shiny?
+## What is Shiny good for?
+- Data exploration / report generation tools for partners
+- Dashboards / database frontends
+- Interactive models for discussions with partners, decision-makers
+- Data analysis tools
+- Supplementary material for publications
+- Others??
+
+## Anatomy of a Shiny app
 <img src="copied_slides/intro3.png" width="800">
 https://github.com/jcheng5/shiny-training-rstudioconf-2018/blob/master/slides/01-fast-intro.pdf
 
