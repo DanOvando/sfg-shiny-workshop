@@ -1,25 +1,30 @@
-# Turning the basic shiny app into shinydashboard
+# Basic Shiny app to explore fishery projections
+# Now adding new features - bookmaring
 
 # Code common across app. Can also place in separate global.R -----------
 # Load packages
 library(shiny)
 library(tidyverse)
-library(shinydashboard)
+library(shinythemes)
 # Load data. Anonymized upsides data for 10 countries for BAU, FMSY, and Opt policies
 upsides_data <- read_csv("../data/upsides_data.csv")
 
 # User interface. Can also place in separate ui.R -----------
-# To switch from regular shiny layout to shinydashboard, just change fluidPage to dashboardPage
+# To add bookmarking, need to make ui into function
 ui <- function(request){
-  dashboardPage(
+  fluidPage(
+  
+  # Set theme to default for now -----------
+  theme = shinythemes::shinytheme("slate"),
     
-    # Application title -----------
-    # To switch from regular shiny layout to shinydashboard, just change titlePanel to dashboardHeader, and specify title
-    dashboardHeader(title = "Fishery Projections Explorer"),
+  # Application title -----------
+  titlePanel("Fishery Projections Explorer"),
+  
+  # Initiate Sidebar layout  -----------
+  sidebarLayout(
     
-    # Initiate Sidebar layout  -----------
-    # To switch from regular shiny layout to shinydashboard, just change sidebarLayout to dashboardSidebar
-    dashboardSidebar(
+    # Configure sidebar  -----------
+    sidebarPanel(
       
       # Input for country filter  -----------
       selectInput(inputId = "country",
@@ -37,8 +42,7 @@ ui <- function(request){
     ),
     
     # Configure main panel  -----------
-    # To switch from regular shiny layout to shinydashboard, just change mainPanel to dashboardBody
-    dashboardBody(
+    mainPanel(
       
       # Display biomass figure  -----------
       plotOutput("biomass_plot"),
@@ -48,10 +52,11 @@ ui <- function(request){
       
       # Display profits figure  -----------
       plotOutput("profits_plot")
-      
     )
   )
+)
 }
+
 # Server. can also place in separate server.R -----------
 server <- function(input, output, session) {
   
@@ -95,4 +100,5 @@ server <- function(input, output, session) {
   })
 }
 
+# To add bookmarking, need to add enableBookmarking to shinyApp call
 shinyApp(ui, server, enableBookmarking = "url")

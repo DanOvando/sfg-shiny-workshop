@@ -1,16 +1,4 @@
-# Take advantage of modules to streamline code
-
-# # Handy snippet for quick-starting a shiny module:
-# name_UI <- function(id) {
-#   ns <- NS(id)
-#   tagList(
-#     
-#   )
-# }
-# 
-# name <- function(input, output, session) {
-#   
-# }
+# Take advantage of more shinydashboard features by adding infoBoxes
 
 # Code common across app. Can also place in separate global.R -----------
 # Load packages
@@ -19,10 +7,6 @@ library(tidyverse)
 library(shinydashboard)
 # Load data. Anonymized upsides data for 10 countries for BAU, FMSY, and Opt policies
 upsides_data <- read_csv("../data/upsides_data.csv")
-
-# Source shiny modules
-source("modules/projection_plot_mod.R")
-source("modules/upsides_box_mod.R")
 
 # User interface. Can also place in separate ui.R -----------
 ui <- function(request){
@@ -54,27 +38,46 @@ ui <- function(request){
       
       # Initialize fluid row  -----------
       fluidRow(
-        # Now we can just call module UIs
+        
         # Display biomass figure  -----------
-        projection_plot_mod_UI("biomass_plot"),
+        # Put inside a box  -----------
+        box(title = "Biomass Projections", 
+            status = "primary",
+            solidHeader = TRUE,
+            width = 4,
+            plotOutput("biomass_plot")),
+        
         
         # Display catch figure  -----------
-        projection_plot_mod_UI("catch_plot"),
+        # Put inside a box  -----------
+        box(title = "Catch Projections", 
+            status = "primary",
+            solidHeader = TRUE,
+            width = 4,
+            plotOutput("catch_plot")),
         
-        # Display Profits figure  -----------
-        projection_plot_mod_UI("profits_plot")
+        # Display profits figure  -----------
+        # Put inside a box  -----------
+        box(title = "Profits Projections", 
+            status = "primary",
+            solidHeader = TRUE,
+            width = 4,
+            plotOutput("profits_plot"))
         
       ),
       fluidRow(
-        # Now we can just call module UIs
+        
         # Display change in biomass infoBox  -----------
-        upsides_box_mod_UI("biomass_box"),
+        infoBoxOutput("biomass_box",
+                      width = 4),
         
         # Display change in catch infoBox  -----------
-        upsides_box_mod_UI("catch_box"),
+        infoBoxOutput("catch_box",
+                      width = 4),
         
         # Display change in profits infoBox  -----------
-        upsides_box_mod_UI("profits_box")
+        infoBoxOutput("profits_box",
+                      width = 4)
       )
     )
   )
@@ -110,20 +113,83 @@ server <- function(input, output, session) {
     
   })
   
-  # Call all modules  -----------
+  # Render biomass plot using filtered data set  -----------
+  output$biomass_plot <- renderPlot({
+    
+    filtered_data() %>%
+      ggplot(aes(x = Year, y = Biomass, color = Policy)) +
+      geom_line()
+    
+  })
   
-  callModule(projection_plot_mod, "biomass_plot", data = filtered_data, indicator = "Biomass")
+  # Render catch plot using filtered data set  -----------
+  output$catch_plot <- renderPlot({
+    
+    filtered_data() %>%
+      ggplot(aes(x = Year, y = Catch, color = Policy)) +
+      geom_line()
+    
+  })
   
-  callModule(projection_plot_mod, "catch_plot", data = filtered_data, indicator = "Catch")
+  # Render profits plot using filtered data set  -----------
+  output$profits_plot <- renderPlot({
+    
+    filtered_data() %>%
+      ggplot(aes(x = Year, y = Profits, color = Policy)) +
+      geom_line()
+    
+  })
   
-  callModule(projection_plot_mod, "profits_plot", data = filtered_data, indicator = "Profits")
+  # Render infoBox for biomass changes  -----------
+  output$biomass_box <- renderInfoBox({
+    
+    infoBox(
+      "Change in biomass from start to end",
+      
+      filtered_upsides_data() %>%
+        filter(indicator == "Biomass") %>%
+        mutate(output_text = paste0(Policy," Change: ",prettyNum(round(change,0),big.mark=","))) %>%
+        .$output_text %>%
+        paste(br()) %>%
+        HTML()
+      
+    )
+    
+  })
   
-  callModule(upsides_box_mod, "biomass_box", data_box = filtered_upsides_data, indicator_box = "Biomass")
+  # Render infoBox for catch changes  -----------
+  output$catch_box <- renderInfoBox({
+    
+    infoBox(
+      "Change in catch from start to end",
+      
+      filtered_upsides_data() %>%
+        filter(indicator == "Catch") %>%
+        mutate(output_text = paste0(Policy," Change: ",prettyNum(round(change,0),big.mark=","))) %>%
+        .$output_text %>%
+        paste(br()) %>%
+        HTML()
+      
+    )
+    
+  })
   
-  callModule(upsides_box_mod, "catch_box", data_box = filtered_upsides_data, indicator_box = "Catch")
-  
-  callModule(upsides_box_mod, "profits_box", data_box = filtered_upsides_data, indicator_box = "Profits")
-  
+  # Render infoBox for profits changes  -----------
+  output$profits_box <- renderInfoBox({
+    
+    infoBox(
+      "Change in profits from start to end",
+      
+      filtered_upsides_data() %>%
+        filter(indicator == "Profits") %>%
+        mutate(output_text = paste0(Policy," Change: ",prettyNum(round(change,0),big.mark=","))) %>%
+        .$output_text %>%
+        paste(br()) %>%
+        HTML()
+      
+    )
+    
+  })
 }
 
 shinyApp(ui, server, enableBookmarking = "url")

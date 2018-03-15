@@ -1,4 +1,4 @@
-# Take advantage of more shinydashboard features by adding boxes
+# Turning the basic shiny app into shinydashboard
 
 # Code common across app. Can also place in separate global.R -----------
 # Load packages
@@ -9,13 +9,16 @@ library(shinydashboard)
 upsides_data <- read_csv("../data/upsides_data.csv")
 
 # User interface. Can also place in separate ui.R -----------
+# To switch from regular shiny layout to shinydashboard, just change fluidPage to dashboardPage
 ui <- function(request){
   dashboardPage(
     
     # Application title -----------
+    # To switch from regular shiny layout to shinydashboard, just change titlePanel to dashboardHeader, and specify title
     dashboardHeader(title = "Fishery Projections Explorer"),
     
     # Initiate Sidebar layout  -----------
+    # To switch from regular shiny layout to shinydashboard, just change sidebarLayout to dashboardSidebar
     dashboardSidebar(
       
       # Input for country filter  -----------
@@ -34,37 +37,18 @@ ui <- function(request){
     ),
     
     # Configure main panel  -----------
+    # To switch from regular shiny layout to shinydashboard, just change mainPanel to dashboardBody
     dashboardBody(
       
-      # Initialize fluid row  -----------
-      fluidRow(
-        
-        # Display biomass figure  -----------
-        # Put inside a box  -----------
-        box(title = "Biomass Projections", 
-            status = "primary",
-            solidHeader = TRUE,
-            width = 4,
-            plotOutput("biomass_plot")),
-        
-        
-        # Display catch figure  -----------
-        # Put inside a box  -----------
-        box(title = "Catch Projections", 
-            status = "primary",
-            solidHeader = TRUE,
-            width = 4,
-            plotOutput("catch_plot")),
-        
-        # Display profits figure  -----------
-        # Put inside a box  -----------
-        box(title = "Profits Projections", 
-            status = "primary",
-            solidHeader = TRUE,
-            width = 4,
-            plotOutput("profits_plot"))
-        
-      )
+      # Display biomass figure  -----------
+      plotOutput("biomass_plot"),
+      
+      # Display catch figure  -----------
+      plotOutput("catch_plot"),
+      
+      # Display profits figure  -----------
+      plotOutput("profits_plot")
+      
     )
   )
 }
@@ -109,7 +93,6 @@ server <- function(input, output, session) {
       geom_line()
     
   })
-  
 }
 
 shinyApp(ui, server, enableBookmarking = "url")

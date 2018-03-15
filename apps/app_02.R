@@ -1,5 +1,5 @@
 # Basic Shiny app to explore fishery projections
-# Now adding new features - theme selector and bookmaring
+# Now adding new features - theme selector
 
 # Code common across app. Can also place in separate global.R -----------
 # Load packages
@@ -10,15 +10,10 @@ library(shinythemes)
 upsides_data <- read_csv("../data/upsides_data.csv")
 
 # User interface. Can also place in separate ui.R -----------
-# To add bookmarking, need to make ui into function
-ui <- function(request){
-  fluidPage(
+ui <- fluidPage(
   
   # add live theme selector title -----------
   shinythemes::themeSelector(),  
-  
-  # Set theme to default for now -----------
-  theme = shinythemes::shinytheme("united"),
     
   # Application title -----------
   titlePanel("Fishery Projections Explorer"),
@@ -38,10 +33,8 @@ ui <- function(request){
       checkboxGroupInput(inputId = "policy",
                          label = "Select policies for figures",
                          choices = unique(upsides_data$Policy),
-                         selected = "Business As Usual"),
-      
-      # Bookmark button  -----------
-      bookmarkButton()
+                         selected = "Business As Usual")
+
     ),
     
     # Configure main panel  -----------
@@ -58,7 +51,6 @@ ui <- function(request){
     )
   )
 )
-}
 
 # Server. can also place in separate server.R -----------
 server <- function(input, output, session) {
@@ -103,5 +95,4 @@ server <- function(input, output, session) {
   })
 }
 
-# To add bookmarking, need to add enableBookmarking to shinyApp call
-shinyApp(ui, server, enableBookmarking = "url")
+shinyApp(ui, server)

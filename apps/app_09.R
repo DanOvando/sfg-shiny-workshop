@@ -1,48 +1,44 @@
-# Turn ggplots into plotly plots
+# Use materialize instead of shinydashboards
 
 # Code common across app. Can also place in separate global.R -----------
 # Load packages
 library(shiny)
 library(tidyverse)
-library(shinydashboard)
+library(shinymaterial)
 library(plotly)
 # Load data. Anonymized upsides data for 10 countries for BAU, FMSY, and Opt policies
 upsides_data <- read_csv("../data/upsides_data.csv")
 
 # Source shiny modules
-source("modules/projection_plotly_mod.R")
-source("modules/upsides_box_mod.R")
+source("modules/projection_plotly_material_mod.R")
+source("modules/upsides_box_material_mod.R")
 
 # User interface. Can also place in separate ui.R -----------
-ui <- function(request){
-  dashboardPage(
+ui <- material_page(
     
     # Application title -----------
-    dashboardHeader(title = "Fishery Projections Explorer"),
+    title = "Fishery Projections Explorer",
     
-    # Initiate Sidebar layout  -----------
-    dashboardSidebar(
+    # Initiate material Sidebar layout  -----------
+    material_side_nav(
       
       # Input for country filter  -----------
-      selectInput(inputId = "country",
+      material_dropdown(input_id = "country",
                   label = "Select country for figures",
                   choices = unique(upsides_data$Country) %>% sort()),
       
       # Input for policy filter  -----------
-      checkboxGroupInput(inputId = "policy",
+      material_dropdown(input_id = "policy",
                          label = "Select policies for figures",
                          choices = unique(upsides_data$Policy),
-                         selected = "Business As Usual"),
-      
-      # Bookmark button  -----------
-      bookmarkButton()
+                         selected = "Business As Usual")
     ),
     
     # Configure main panel  -----------
-    dashboardBody(
+    #dashboardBody(
       
       # Initialize fluid row  -----------
-      fluidRow(
+      material_row(
         
         # Display biomass figure  -----------
         projection_plot_mod_UI("biomass_plot"),
@@ -54,7 +50,7 @@ ui <- function(request){
         projection_plot_mod_UI("profits_plot")
         
       ),
-      fluidRow(
+    material_row(
         
         # Display change in biomass infoBox  -----------
         upsides_box_mod_UI("biomass_box"),
@@ -66,8 +62,6 @@ ui <- function(request){
         upsides_box_mod_UI("profits_box")
       )
     )
-  )
-}
 
 # Server. can also place in separate server.R -----------
 server <- function(input, output, session) {
@@ -116,4 +110,4 @@ server <- function(input, output, session) {
   
 }
 
-shinyApp(ui, server, enableBookmarking = "url")
+shinyApp(ui, server)
